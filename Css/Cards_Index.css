@@ -1,0 +1,203 @@
+/* Container dos Cards adaptado para o seu projeto */
+.Cards {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 40px 0;
+  position: relative;
+  z-index: 2; /* Garante que fique acima do background do elemento .Corpo */
+}
+
+.Cards .box {
+  position: relative;
+  width: 350px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 30px; /* Reduzido a margem superior para caber melhor */
+  transition: 0.5s;
+}
+
+/* Efeito de rastro/fundo inclinado */
+.Cards .box::before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 50px;
+  width: 60%;
+  height: 100%;
+  text-decoration: none;
+  background: #fff;
+  border-radius: 8px;
+  transform: skewX(15deg);
+  transition: 0.5s;
+}
+
+/* Efeito do Brilho Neon (Glow) */
+.Cards .box::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50px; /* Corrigido: adicionado 'px' que faltava no base */
+  width: 50%;
+  height: 100%;
+  background: #fff;
+  border-radius: 8px;
+  transform: skewX(15deg);
+  transition: 0.5s;
+  filter: blur(30px);
+}
+
+/* Transição do efeito Hover nos fundos */
+.Cards .box:hover::before,
+.Cards .box:hover::after {
+  transform: skewX(0deg);
+  left: 20px;
+  width: calc(100% - 40px); /* Ajustado para preencher melhor o espaço do card */
+}
+
+/* Definição das cores dos gradientes usando sua paleta (Ouro e Vermelho) */
+/* Card 1: Gradiente Dourado para Vermelho */
+.Cards .box:nth-child(1)::before,
+.Cards .box:nth-child(1)::after {
+  background: linear-gradient(315deg, #D4AF37, #4a0005);
+}
+
+/* Card 2: Gradiente Vermelho Vibrante para Preto */
+.Cards .box:nth-child(2)::before,
+.Cards .box:nth-child(2)::after {
+  background: linear-gradient(315deg, #ff0058, #1a1a1a);
+}
+
+/* Elemento Span para os quadrados flutuantes no hover */
+.Cards .box span {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.Cards .box span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-radius: 8px;
+  background: linear-gradient(315deg, #D4AF37, #4a0005);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: 0.5s;  
+  animation: animateCards 2s ease-in-out infinite;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.Cards .box:hover span::before {
+  top: -50px;
+  left: 50px;
+  width: 100px;
+  height: 100px;
+  opacity: 1;
+}
+
+.Cards .box span::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0; /* Corrigido de 100% para 0 para iniciar oculto */
+  height: 0;
+  border-radius: 8px;
+  background: linear-gradient(315deg, #ff0058, #1a1a1a);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: 0.5s;
+  animation: animateCards 2s ease-in-out infinite;
+  box-shadow: 0 5px 15px rgba(255, 2, 2, 0.08);
+  animation-delay: -1s;
+}
+
+.Cards .box:hover span::after {
+  bottom: -50px;
+  right: 50px;
+  width: 100px;
+  height: 100px;
+  opacity: 1;
+}
+
+/* Animação de flutuação dos blocos de vidro */
+@keyframes animateCards {
+  0%, 100% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Bloco de conteúdo interno (Efeito de Vidro) */
+.Cards .box .caixa {
+  position: relative;
+  left: 0;
+  padding: 20px 30px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1;
+  transition: 0.5s;
+}
+
+.Cards .box:hover .caixa {
+  left: -25px;
+  padding: 40px 30px;
+  background: rgba(255, 253, 253, 0.548); /* Destaca levemente o vidro no hover */
+}
+
+/* Ajustes finos nos títulos dos cards */
+.Cards .box .caixa h2 {
+  font-size: 28px;
+  text-align: justify;
+  color: #000000;
+  margin-bottom: 0px; /* Zerado para não empurrar o espaço quando o <p> estiver sumido */
+  font-family: 'Arial', sans-serif;
+  transition: 0.5s ease-in-out; /* Transição suave caso queira mudar algo no hover */
+}
+
+/* Escondendo o parágrafo por padrão */
+.Cards .box .caixa p {
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  text-align: justify;
+  color: #000000 !important;
+  line-height: 1.6em;
+  text-align: left;
+  
+  /* Truque para esconder o elemento mantendo a animação suave */
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  transition: opacity 0.4s ease, max-height 0.4s ease, margin-top 0.4s ease;
+}
+
+/* Fazendo o parágrafo aparecer quando passar o mouse no CARD (.box) */
+.Cards .box:hover .caixa h2 {
+  margin-bottom: 10px; /* Devolve o espaçamento quando o texto aparece */
+}
+
+.Cards .box:hover .caixa p {
+  opacity: 1;
+  max-height: 150px; /* Altura máxima estimada para o texto aparecer */
+  margin-top: 10px;  /* Cria um espaçamento elegante entre o H2 e o P */
+}
